@@ -64,4 +64,4 @@
 
 ## 2.2 Интерфейс пользователя
 Окно входа в приложение, когда автомобиль уже добавлен.
-(../../Images/Mockups/Main.PNG)  
+ (TRiTPO-Project/Images/Mockups/Main.PNG) 
