@@ -7,8 +7,8 @@
 1.2 [Fuelio](#fuelio)  
 1.3 [Топливомер](#topliomer)  
 1.4 [Gas Visor](#gas_visor)  
-1.5 [Car Manager](#car_manager) 
-1.6 [Авто расходы](#avto_rasxody) 
+1.5 [Car Manager](#car_manager) </br> 
+1.6 [Авто расходы](#avto_rasxody) </br>
 2 [Сравнение приложений](#comparison_of_applications)
 
 <a name="application_overview"/>
