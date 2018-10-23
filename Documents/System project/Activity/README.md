@@ -3,12 +3,12 @@
 
 # 1 Вход в приложение
 
-![Вход в приложение](../../../Images/Systemdesign/Activity1.png)
+![Вход в приложение](../../../Images/SystemDesign/Activity1.PNG)
 
 # 2 Добавить первый автомобиль
 
-![Добавить первый автомобиль](../../../Images/Systemdesign/Activity2.png)
+![Добавить первый автомобиль](../../../Images/SystemDesign/Activity2.PNG)
 
 # 3 Добавить несколько автомобилей
 
-![Добавить несколько автомобилей](../../../Images/Systemdesign/Activity3.png)
+![Добавить несколько автомобилей](../../../Images/SystemDesign/Activity3.PNG)
