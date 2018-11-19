@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".MainActivity"
+    tools:showIn="@layout/activity_main">
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addCarBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_input_add"
+        app:backgroundTint="@color/design_default_color_primary_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="1.0"
+        tools:srcCompat="@android:drawable/ic_input_add" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="344dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <Spinner
+            android:id="@+id/Cars"
+            android:layout_width="match_parent"
+            android:layout_height="35dp" />
+
+        <TextView
+            android:id="@+id/TankVolumeLabel"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:text="@string/TankVolume" />
+
+        <TextView
+            android:id="@+id/LastRefillLabel"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:text="@string/LastRefill" />
+
+        <TextView
+            android:id="@+id/InTankLabel"
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:text="@string/InTank" />
+
+        <TextView
+            android:id="@+id/MileageLabel"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="@string/Mileage" />
+
+        <TextView
+            android:id="@+id/RefillLabel"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:text="@string/Refill" />
+
+        <EditText
+            android:id="@+id/FloodedNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="Залито"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/MileageNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Пробег"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            tools:targetApi="o" />
+
+        <Button
+            android:id="@+id/EnterBtn"
+            android:layout_width="103dp"
+            android:layout_height="37dp"
+            android:text="@string/EnterBtn" />
+
+        <TextView
+            android:id="@+id/Сonsumption"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/Consumption" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
