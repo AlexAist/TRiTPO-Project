@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:autofillHints=""
             android:ems="10"
-            android:hint="Залито"
+            android:hint="@string/flooded"
             android:inputType="number" />
 
         <EditText
@@ -87,7 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Пробег"
+            android:hint="@string/mileage"
             android:importantForAutofill="no"
             android:inputType="number"
             tools:targetApi="o" />
