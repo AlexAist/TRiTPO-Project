@@ -64,8 +64,14 @@
         <TextView
             android:id="@+id/MileageLabel"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="42dp"
             android:text="@string/Mileage" />
+
+        <TextView
+            android:id="@+id/consumptionLabel"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:text="@string/Consumption" />
 
         <TextView
             android:id="@+id/RefillLabel"
@@ -106,10 +112,5 @@
             android:layout_height="37dp"
             android:text="@string/EnterBtn" />
 
-        <TextView
-            android:id="@+id/Сonsumption"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="@string/Consumption" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
