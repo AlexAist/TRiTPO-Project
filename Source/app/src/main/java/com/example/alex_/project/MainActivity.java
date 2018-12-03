@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 import static android.database.sqlite.SQLiteDatabase.OPEN_READWRITE;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.content_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         final Spinner Cars = (Spinner) findViewById(R.id.Cars);
         myList = new ArrayList<String>();
 
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         if(cursor.getCount() == 0){
             Intent intent = new Intent(MainActivity.this, AddCarActivity.class);
             startActivity(intent);
+            MainActivity.this.finish();
         }
         int count = cursor.getCount();
         if(cursor.getCount() > 0){
@@ -79,17 +82,19 @@ public class MainActivity extends AppCompatActivity {
         Cars.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(cursor.getCount() > 0){
+                final Cursor newCursor = db.rawQuery("SELECT * FROM car;", null);
+                if(newCursor.getCount() > 0){
                     int index = Cars.getSelectedItemPosition();
                     String getName = myList.get(index);
-                    for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
-                        String carName = cursor.getString(1);
+                    for(newCursor.moveToFirst(); !newCursor.isAfterLast(); newCursor.moveToNext()){
+                        String carName = newCursor.getString(1);
                         if(carName.equals(getName)){
-                            tankVolLabel.setText("Объем бака: " + cursor.getString(2));
-                            inTankLabel.setText("В баке осталось: " + cursor.getString(5));
-                            mileageLabel.setText("Пробег: " + cursor.getString(4));
-                            String formatedDouble = String.format("%.1f", Double.parseDouble(cursor.getString(8)));
-                            consumptionLabel.setText(formatedDouble + "л/100км");
+                            tankVolLabel.setText(String.format("Объем бака: %s", newCursor.getString(2)));
+                            inTankLabel.setText(String.format("В баке осталось: %s", newCursor.getString(5)));
+                            mileageLabel.setText(String.format("Пробег: %s", newCursor.getString(4)));
+                            //String formatedDouble = String.format("%.1f", Double.parseDouble(newCursor.getString(8)));
+                            String str = newCursor.getString(8);
+                            consumptionLabel.setText(String.format("%sл/100км", str));
                         }
                     }
                 }
@@ -108,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();*/
                 Intent intent = new Intent(MainActivity.this, AddCarActivity.class);
                 startActivity(intent);
+                MainActivity.this.finish();
             }
         });
         Button enterBtn = (Button) findViewById(R.id.EnterBtn);
@@ -188,6 +194,4 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
 }

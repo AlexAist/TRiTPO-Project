@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.concurrent.TimeUnit;
+
 import static android.R.layout.simple_spinner_item;
 
 public class AddCarActivity extends Activity {
@@ -21,6 +23,7 @@ public class AddCarActivity extends Activity {
     public String WhatMileageStr;
     public ArrayAdapter<String> adapter;
     public SQLiteDatabase database;
+    public MainActivity mainActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +32,7 @@ public class AddCarActivity extends Activity {
         final TextView AddTankVolumeText = (TextView) findViewById(R.id.AddTankVolumeText);
         final TextView HowMuchOilText = (TextView) findViewById(R.id.HowMuchOilText);
         final TextView WhatMileageText = (TextView) findViewById(R.id.WhatMileageText);
-        final MainActivity mainActivity = new MainActivity();
+        mainActivity = new MainActivity();
         Button SaveCarBtn = (Button) findViewById(R.id.SaveCarBtn);
         SaveCarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,8 +52,9 @@ public class AddCarActivity extends Activity {
                     insertValues.put("mileage", whatMileage);
                     insertValues.put("intanknow", howMuchOil);
                     database.insert("car", null, insertValues);
-                    mainActivity.myList.add(AddCarStr);
-                    finish();
+                    Intent intent = new Intent(AddCarActivity.this, MainActivity.class);
+                    AddCarActivity.this.finish();
+                    startActivity(intent);
                 }
             }
         });
