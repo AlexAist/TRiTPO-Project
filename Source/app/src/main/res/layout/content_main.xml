@@ -74,6 +74,14 @@
             android:text="@string/Refill" />
 
         <EditText
+            android:id="@+id/afterDrive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/zalito"
+            android:inputType="number" />
+
+        <EditText
             android:id="@+id/FloodedNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
