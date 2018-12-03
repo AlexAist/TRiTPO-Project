@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,8 +53,15 @@ public class MainActivity extends AppCompatActivity {
         db.execSQL("CREATE TABLE IF NOT EXISTS car (id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " name TEXT NOT NULL, tankvolume INTEGER NOT NULL, " +
                 "mileage INTEGER NOT NULL, lastmileage INTEGER, " +
-                "intanklast INTEGER, intanknow INTEGER NOT NULL, flooded INTEGER)");
+                "intanklast INTEGER, intanknow INTEGER NOT NULL, flooded INTEGER, average DOUBLE)");
         final Cursor cursor = db.rawQuery("SELECT * FROM car;", null);
+        final TextView floodedNum = (TextView) findViewById(R.id.FloodedNumber);
+        final TextView mileageNum = (TextView) findViewById(R.id.MileageNumber);
+        final TextView afterDrive = (TextView) findViewById(R.id.afterDrive);
+        final TextView tankVolLabel = (TextView) findViewById(R.id.TankVolumeLabel);
+        final TextView inTankLabel = (TextView) findViewById(R.id.InTankLabel);
+        final TextView mileageLabel = (TextView) findViewById(R.id.MileageLabel);
+        final TextView consumptionLabel = (TextView) findViewById(R.id.consumptionLabel);
         if(cursor.getCount() == 0){
             Intent intent = new Intent(MainActivity.this, AddCarActivity.class);
             startActivity(intent);
@@ -68,6 +76,30 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, myList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Cars.setAdapter(adapter);
+        Cars.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(cursor.getCount() > 0){
+                    int index = Cars.getSelectedItemPosition();
+                    String getName = myList.get(index);
+                    for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
+                        String carName = cursor.getString(1);
+                        if(carName.equals(getName)){
+                            tankVolLabel.setText("Объем бака: " + cursor.getString(2));
+                            inTankLabel.setText("В баке осталось: " + cursor.getString(5));
+                            mileageLabel.setText("Пробег: " + cursor.getString(4));
+                            String formatedDouble = String.format("%.1f", Double.parseDouble(cursor.getString(8)));
+                            consumptionLabel.setText(formatedDouble + "л/100км");
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addCarBtn);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,9 +110,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        final TextView floodedNum = (TextView) findViewById(R.id.FloodedNumber);
-        final TextView mileageNum = (TextView) findViewById(R.id.MileageNumber);
-        final TextView afterDrive = (TextView) findViewById(R.id.afterDrive);
         Button enterBtn = (Button) findViewById(R.id.EnterBtn);
         enterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,21 +123,41 @@ public class MainActivity extends AppCompatActivity {
                     int mileageInt = Integer.parseInt(mileageStr);
                     int index = Cars.getSelectedItemPosition();
                     String getName = myList.get(index);
-                    if(cursor.getCount() > 0){
-                        for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
-                            String carName = cursor.getString(1);
-                            int id =Integer.parseInt(cursor.getString(0));
+                    final Cursor newCursor = db.rawQuery("SELECT * FROM car;", null);
+                    if(newCursor.getCount() > 0){
+                        for(newCursor.moveToFirst(); !newCursor.isAfterLast(); newCursor.moveToNext()){
+                            String carName = newCursor.getString(1);
+                            int id =Integer.parseInt(newCursor.getString(0));
                             if(carName.equals(getName)){
+                                int lastTank = Integer.parseInt(newCursor.getString(6));
+                                int lastMileage = Integer.parseInt(newCursor.getString(3));
                                 ContentValues contentValues = new ContentValues();
                                 contentValues.put("intanklast", afterDriveInt );
                                 contentValues.put("mileage", mileageInt);
+                                contentValues.put("lastmileage", lastMileage);
                                 contentValues.put("flooded", floodedInt);
                                 int res = floodedInt + afterDriveInt;
                                 contentValues.put("intanknow", res);
+                                //db.update("car", contentValues, "id=" + id, null);
+                                int resTank = lastTank - afterDriveInt;
+                                int resMileage = mileageInt - lastMileage;
+                                double resKM = (double) resTank/resMileage;
+                                double resultCons = resKM*100;
+                                String formatedDouble = String.format("%.1f", resultCons);
+                                //ContentValues averageValue = new ContentValues();
+                                contentValues.put("average", resultCons);
                                 db.update("car", contentValues, "id=" + id, null);
                                 afterDrive.setText("");
                                 floodedNum.setText("");
                                 mileageNum.setText("");
+                                tankVolLabel.setText("");
+                                inTankLabel.setText("");
+                                mileageLabel.setText("");
+                                tankVolLabel.setText("Объем бака: " + newCursor.getString(2));
+                                inTankLabel.setText("В баке осталось: " + afterDriveInt);
+                                mileageLabel.setText("Пробег: " + mileageInt);
+                                consumptionLabel.setText(formatedDouble + "л/100км");
+
                             }
                         }
                     }
