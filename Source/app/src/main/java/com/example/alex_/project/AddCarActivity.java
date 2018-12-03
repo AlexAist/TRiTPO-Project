@@ -44,17 +44,13 @@ public class AddCarActivity extends Activity {
                     int howMuchOil = Integer.parseInt(HowMuchOilStr);
                     int whatMileage = Integer.parseInt(WhatMileageStr);
                     ContentValues insertValues = new ContentValues();
-                       // database.execSQL("INSERT INTO car(name, tankvolume, mileage, intanknow) VALUES(" +
-                           //     AddCarStr + "," + tankVol + "," + howMuchOil + "," + whatMileage + ")");
-
                     insertValues.put("name", AddCarStr);
                     insertValues.put("tankvolume", tankVol);
                     insertValues.put("mileage", whatMileage);
                     insertValues.put("intanknow", howMuchOil);
                     database.insert("car", null, insertValues);
                     mainActivity.myList.add(AddCarStr);
-                    Intent intent = new Intent(AddCarActivity.this, MainActivity.class);
-                    startActivity(intent);
+                    finish();
                 }
             }
         });
