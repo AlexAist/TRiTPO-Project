@@ -24,6 +24,7 @@ public class AddCarActivity extends Activity {
     public ArrayAdapter<String> adapter;
     public SQLiteDatabase database;
     public MainActivity mainActivity;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,10 +40,11 @@ public class AddCarActivity extends Activity {
             public void onClick(View v) {
                 AddCarStr = AddCarText.getText().toString();
                 AddTankVolumeStr = AddTankVolumeText.getText().toString();
-                HowMuchOilStr =HowMuchOilText.getText().toString();
+                HowMuchOilStr = HowMuchOilText.getText().toString();
                 WhatMileageStr = WhatMileageText.getText().toString();
                 database = getBaseContext().openOrCreateDatabase("app.db", SQLiteDatabase.OPEN_READWRITE, null);
-                if (!AddCarStr.isEmpty() & !AddTankVolumeStr.isEmpty() & !HowMuchOilStr.isEmpty() & !WhatMileageStr.isEmpty()){
+                if (!AddCarStr.isEmpty() & !AddTankVolumeStr.isEmpty() &
+                    !HowMuchOilStr.isEmpty() & !WhatMileageStr.isEmpty()){
                     int tankVol = Integer.parseInt(AddTankVolumeStr);
                     int howMuchOil = Integer.parseInt(HowMuchOilStr);
                     int whatMileage = Integer.parseInt(WhatMileageStr);
