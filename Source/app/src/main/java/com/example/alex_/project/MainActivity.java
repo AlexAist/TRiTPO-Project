@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import static android.database.sqlite.SQLiteDatabase.OPEN_READWRITE;
 
 public class MainActivity extends AppCompatActivity {
-
     public SQLiteDatabase db;
     public ArrayAdapter<String> adapter;
     public ArrayList<String> myList;
@@ -55,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
         db.execSQL("CREATE TABLE IF NOT EXISTS car (id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " name TEXT NOT NULL, tankvolume INTEGER NOT NULL, " +
                 "mileage INTEGER NOT NULL, lastmileage INTEGER, " +
-                "intanklast INTEGER, intanknow INTEGER NOT NULL, flooded INTEGER, average DOUBLE)");
+                "intanklast INTEGER, intanknow INTEGER NOT NULL, " + 
+                "flooded INTEGER, average DOUBLE)");
         final Cursor cursor = db.rawQuery("SELECT * FROM car;", null);
         final TextView floodedNum = (TextView) findViewById(R.id.FloodedNumber);
         final TextView mileageNum = (TextView) findViewById(R.id.MileageNumber);
@@ -92,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
                             tankVolLabel.setText(String.format("Объем бака: %s", newCursor.getString(2)));
                             inTankLabel.setText(String.format("В баке осталось: %s", newCursor.getString(5)));
                             mileageLabel.setText(String.format("Пробег: %s", newCursor.getString(4)));
-                            //String formatedDouble = String.format("%.1f", Double.parseDouble(newCursor.getString(8)));
                             String str = newCursor.getString(8);
                             consumptionLabel.setText(String.format("%sл/100км", str));
                         }
@@ -109,8 +108,6 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
                 Intent intent = new Intent(MainActivity.this, AddCarActivity.class);
                 startActivity(intent);
                 MainActivity.this.finish();
@@ -133,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                     if(newCursor.getCount() > 0){
                         for(newCursor.moveToFirst(); !newCursor.isAfterLast(); newCursor.moveToNext()){
                             String carName = newCursor.getString(1);
-                            int id =Integer.parseInt(newCursor.getString(0));
+                            int id = Integer.parseInt(newCursor.getString(0));
                             if(carName.equals(getName)){
                                 int lastTank = Integer.parseInt(newCursor.getString(6));
                                 int lastMileage = Integer.parseInt(newCursor.getString(3));
@@ -144,13 +141,11 @@ public class MainActivity extends AppCompatActivity {
                                 contentValues.put("flooded", floodedInt);
                                 int res = floodedInt + afterDriveInt;
                                 contentValues.put("intanknow", res);
-                                //db.update("car", contentValues, "id=" + id, null);
                                 int resTank = lastTank - afterDriveInt;
                                 int resMileage = mileageInt - lastMileage;
                                 double resKM = (double) resTank/resMileage;
                                 double resultCons = resKM*100;
                                 String formatedDouble = String.format("%.1f", resultCons);
-                                //ContentValues averageValue = new ContentValues();
                                 contentValues.put("average", resultCons);
                                 db.update("car", contentValues, "id=" + id, null);
                                 afterDrive.setText("");
@@ -175,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -191,7 +185,6 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }
